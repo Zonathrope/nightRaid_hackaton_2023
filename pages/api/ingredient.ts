@@ -4,7 +4,7 @@ import {Ingredient, MyError} from "../../src/server/model/index";
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<any>
+  res: NextApiResponse<Ingredient | MyError | Array<Ingredient>>
 ) {
     if (req.method === 'POST') {
         await addNewIngredient(req, res);
