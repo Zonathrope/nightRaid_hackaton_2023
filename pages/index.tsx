@@ -1,11 +1,10 @@
 import type { NextPage } from 'next'
-import Head from 'next/head'
-import Image from 'next/image'
+import ComponentWrapper from '@/components/ComponentWrapper/ComponentWrapper'
 
-import styles from '@/styles/Home.module.css'
+import HomePage from '@/components/Home'
 
 const Home: NextPage = () => {
-  return (<>The Meal App</>)
+  return (<ComponentWrapper><HomePage/></ComponentWrapper>)
 }
 
 export default Home
