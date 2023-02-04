@@ -24,5 +24,9 @@ export interface User {
   password?: string
 }
 
+export interface MyError{
+  errorMessage: string,
+  statusCode: number
+}
 
 
