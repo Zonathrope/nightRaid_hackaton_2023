@@ -1,5 +1,5 @@
 import type { NextPage } from 'next'
-import ComponentWrapper from '@/components/ComponentWrapper/ComponentWrapper'
+import ComponentWrapper from '@/components/ComponentWrapper'
 
 import HomePage from '@/components/Home'
 
