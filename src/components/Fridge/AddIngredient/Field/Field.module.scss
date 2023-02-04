@@ -1,0 +1,26 @@
+.input {
+  display: flex;
+  flex-direction: column;
+  margin: 10px 0 20px 0;
+  position: relative;
+  label {
+    font-family: 'Arial', sans-serif;
+    font-weight: 700;
+    text-transform: capitalize;
+  }
+  input {
+    border: 2px solid #2a2a2a;
+    padding-left: 10px;
+    border-radius: 10px;
+    width: 12rem;
+    height: 1.8rem;
+    &:focus {
+      border: 2px solid transparent;
+      outline: 2px solid #623a3a;
+    }
+  }
+  .error {
+    position: absolute;
+    top: 100%;
+  }
+}
