@@ -7,25 +7,18 @@ export default async function handler(
   res: NextApiResponse<Ingredient | MyError | Array<Ingredient>>
 ) {
     if (req.method === 'POST') {
-        await addNewIngredient(req, res);
+        res.status(200).json(await addNewIngredient());
       } else if(req.method === 'GET') {
-        await getIngredients(req, res);
+        res.status(200).json(await getIngredients());
       }
 }
 
-async function addNewIngredient(
-    req: NextApiRequest,
-    res: NextApiResponse<Ingredient | MyError>
-  ) {
-    res.status(200).json(await addIngredient());
+async function addNewIngredient():  Promise<Ingredient | MyError>{
+
+    return addIngredient();
 }
 
-async function getIngredients(
-    req: NextApiRequest,
-    res: NextApiResponse<Array<Ingredient> | MyError>
-  ) {
+async function getIngredients(): Promise<Array<Ingredient> | MyError> {
 
-    const response: Array<Ingredient> | MyError = await getAllIngredientsFromDatabase();
-    
-    res.status(200).json(response);
+    return getAllIngredientsFromDatabase();
 }

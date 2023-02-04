@@ -12,28 +12,30 @@ export default async function handler(
     if (isExternalWebsite) {
         res.status(200).json(await getMealsByTitleFromMealDB(title));
     } else {
-        res.status(200).json(await getIngredients(req, res));
+        res.status(200).json(await getIngredients());
     }
-    // res.status(200).json(await getIngredients(req, res));
 }
 
 // /api/meals?title=${title}&isExternalWebsite=${isExternalSite}`
 async function getMealsByTitleFromMealDB(title: string) {
     const uri =`https://www.themealdb.com/api/json/v1/1/search.php?s=${title}`;
 
-    const getData = async () => {
-        return (await axios.get(uri)).data;
-    };
+    const data = (await axios.get(uri)).data.meals
+                    .map((el: any) => {
+                        return {
+                            id: el.idMeal,
+                            title: el.strMeal,
+                            image: el.strMealThumb,
+                            description: el.strCategory
+                        };
+                    });
+    
 
-    return getData();
+    return data;
 }
 
-async function getIngredients(
-    req: NextApiRequest,
-    res: NextApiResponse<Array<Ingredient> | MyError>
-  ) {
-    const response: Array<Ingredient> | MyError = await getAllIngredientsFromDatabase();
+async function getIngredients(): Promise<Array<Ingredient> | MyError> {
     
-    return response;
+    return getAllIngredientsFromDatabase();
 }
 
