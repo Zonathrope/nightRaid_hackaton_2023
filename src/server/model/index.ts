@@ -1,13 +1,12 @@
 export interface Ingredient {
   name: string,
   id: string,
-  type: string,
-  isCreatedByUser: boolean
+  type: string
 }
 
 export interface Ingredient_Link {
   meal?: Meal,
-  user?: User
+  user?: User,
   ingredient: Ingredient,
   amount: string
 }

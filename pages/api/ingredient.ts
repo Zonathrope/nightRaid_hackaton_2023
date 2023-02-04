@@ -9,7 +9,7 @@ export default async function handler(
     if (req.method === 'POST') {
         res.status(200).json(await addNewIngredient());
       } else if(req.method === 'GET') {
-        res.status(200).json(await getIngredients());
+        res.status(200).json(await getAllIngredients());
       }
 }
 
@@ -18,7 +18,9 @@ async function addNewIngredient():  Promise<Ingredient | MyError>{
     return addIngredient();
 }
 
-async function getIngredients(): Promise<Array<Ingredient> | MyError> {
+async function getAllIngredients(): Promise<Array<Ingredient> | MyError> {
 
-    return getAllIngredientsFromDatabase();
+  
+
+  return getAllIngredientsFromDatabase();
 }

@@ -1,10 +1,9 @@
 import dotenv  from "dotenv";
 dotenv.config();
 
-import mongoose from "mongoose";
 import {Ingredient, MyError} from "../model/index";
 import DatabaseConnectionManager from "../database-connection-manager";
-import {IngredientModel} from "../schema/ingredient.dto";
+import {IngredientModel} from "../dto/ingredient.dto";
 
 const db = DatabaseConnectionManager.getInstance().createDatabaseConnection();
 
@@ -34,9 +33,9 @@ export const getAllIngredientsFromDatabase = async () => {
 
 async function addToDatabase(): Promise<Ingredient | MyError> {
     const ingridient = new IngredientModel({ 
+        id: "asd12",
         name: "name",
-        type: "type",
-        isCreatedByUser: true 
+        type: "type"
     });
     
     return ingridient.save();

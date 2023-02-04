@@ -4,9 +4,9 @@ dotenv.config();
 import mongoose from "mongoose";
 import {Ingredient, MyError, User, Ingredient_Link} from "../model/index";
 import DatabaseConnectionManager from "../database-connection-manager";
-import {UserModel} from "../schema/user.dto";
-import {IngredientModel} from "../schema/ingredient.dto";
-import {IngredientLinkModel} from "../schema/ingredientLink.dto";
+import {UserModel} from "../dto/user.dto";
+import {IngredientModel} from "../dto/ingredient.dto";
+import {IngredientLinkModel} from "../dto/ingredientLink.dto";
 
 const db = DatabaseConnectionManager.getInstance().createDatabaseConnection();
 
@@ -35,6 +35,8 @@ export const getUser = async (login: string) => {
         return error;
     }
 }
+
+
 
 async function addNewUserToDatabase(login: string, password?: string): Promise<User | MyError> {
     const user = new UserModel({
