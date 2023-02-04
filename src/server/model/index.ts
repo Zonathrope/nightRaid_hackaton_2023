@@ -6,6 +6,8 @@ export interface Ingredient {
 }
 
 export interface Ingredient_Link {
+  meal?: Meal,
+  user?: User
   ingredient: Ingredient,
   amount: string
 }
@@ -14,15 +16,17 @@ export interface Meal {
   id: string,
   title: string,
   image: string,
-  description: string,
-  ingredients: Array<Ingredient_Link>
+  description: string
 }
 
 export interface User {
-  ingredients: Array<Ingredient_Link>,
   login: string,
   password?: string
 }
 
+export interface MyError{
+  errorMessage: string,
+  statusCode: number
+}
 
 
