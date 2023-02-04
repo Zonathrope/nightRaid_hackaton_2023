@@ -6,26 +6,19 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<User | MyError | any>
 ) {
-    if (req.method === 'POST') {
-        await addNewUserToDatabase(req, res);
-      } else if(req.method === 'GET') {
-        await getUserByLogin(req, res);
-      }
+  if (req.method === 'POST') {
+    res.status(200).json(await addNewUserToDatabase(req.body.login as string, req.body.password as string));
+  } else if(req.method === 'GET') {
+    res.status(200).json(await getUserByLogin(req.query.login as string));
+  }
 }
 
-async function addNewUserToDatabase(
-    req: NextApiRequest,
-    res: NextApiResponse<User | MyError>
-  ) {
-    res.status(200).json(await addNewUser(req.body.login, req.body.password));
+async function addNewUserToDatabase (login: string, password?: string): Promise<User | MyError> {
+
+  return (await addNewUser(login, password));
 }
 
-async function getUserByLogin(
-    req: NextApiRequest,
-    res: NextApiResponse<User | MyError | null>
-  ) {
-    
-    const user: User | MyError | null = await getUser(req.query.login as string);
-    
-    res.status(200).json(user);
+async function getUserByLogin(login: string): Promise<User | MyError | null> {
+
+  return (await getUser(login as string));
 }
