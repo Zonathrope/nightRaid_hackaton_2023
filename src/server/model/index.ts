@@ -1,13 +1,7 @@
 export interface Ingredient {
+  idInMealDB: string,
   name: string,
-  id: string,
-  type: string
-}
-
-export interface Ingredient_Link {
-  meal?: Meal,
-  user?: User,
-  ingredient: Ingredient,
+  type: string,
   amount: string
 }
 
@@ -21,6 +15,7 @@ export interface Meal {
 export interface User {
   login: string,
   password?: string
+  ingredientsList: Array<Ingredient>
 }
 
 export interface MyError{
