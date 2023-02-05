@@ -1,7 +1,6 @@
 export interface Ingredient {
   name: string,
   id: string,
-  type: string,
   isCreatedByUser: boolean
 }
 
@@ -9,6 +8,7 @@ export interface Ingredient_Link {
   meal?: Meal,
   user?: User
   ingredient: Ingredient,
+  type: string,
   amount: string
 }
 
