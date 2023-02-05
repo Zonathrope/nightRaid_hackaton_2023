@@ -1,27 +1,33 @@
 import React from 'react'
 import ComponentWrapper from '@/components/ComponentWrapper'
-import { Meal } from '@/server/model'
 
 import MealPage from '@/components/Meal'
-import { getMeal } from '@/queries/meals'
+import { useGetMeal } from '@/queries/meals'
 
 interface SingleMealProps {
-  meal: Meal
+  id: string
 }
 
-const SingleMeal: React.FC<SingleMealProps> = ({ meal }) => {
+const SingleMeal: React.FC<SingleMealProps> = ({ id }) => {
+  const {
+    data,
+    isLoading
+  } = useGetMeal(id)
+
+  if (isLoading) {
+    return <>Loading</>
+  }
   return (
     <ComponentWrapper>
-      <MealPage meal={meal} />
+      <MealPage meal={data} />
     </ComponentWrapper>
   )
 }
 
 export async function getServerSideProps(context: any) {
   const { params: { id } } = context
-  const meal = await getMeal(id)
   return {
-    props: { meal }
+    props: { id }
   }
 }
 

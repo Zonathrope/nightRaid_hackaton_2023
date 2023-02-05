@@ -1,5 +1,44 @@
-.test {
-  div {
-    border: 1px solid black
+.wrapper {
+  margin: 30px;
+  display: flex;
+  .img {
+    width: 50%;
+    object-fit: contain;
+    border-radius: 30px;
+    img { border-radius: 30px }
+  }
+  .ingredients {
+    margin-top: 20px;
+  }
+  .info {
+    color: #2a2a2a;
+    margin-left: 15px;
+    font-family: Arial, sans-serif;
+    .title {
+      font-size: 42px;
+      font-weight: 700;
+    }
+
+    .description {
+      font-style: italic;
+      font-size: 18px;
+    }
+    .instructions {
+      margin-top: 20px;
+      line-height: 20px;
+      display: flex;
+      align-items: center;
+      text-align: justify;
+      text-justify: auto;
+    }
+  }
+}
+
+.ingredientWrapper {
+  display: flex;
+  justify-content: space-between;
+  width: 25%;
+  .name {
+    margin-right: 10px;
   }
 }
