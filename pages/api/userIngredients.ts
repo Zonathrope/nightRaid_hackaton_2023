@@ -12,7 +12,7 @@ export default async function handler(
       //insert new ingredient in user
       res.status(200).json(await addIngredient(req.body._id, req.body.idInMealDB, req.body.nameOfIngredient, req.body.typeOfIngredient, req.body.amount));
     } else if (req.method === 'PATCH') {
-      //update user ingredient amount 
+      //update user ingredient amount
       res.status(200).json(await updateUserIngredient(req.body.ingredientId, req.body.ingredientNewAmount));
     } else if (req.method === 'DELETE') {
       //delete ingredient by userId and ingredientId
