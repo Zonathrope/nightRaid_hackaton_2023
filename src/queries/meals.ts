@@ -10,3 +10,13 @@ export const useGetMeals = (title: string, isExternalSite: boolean) => {
     enabled: !!title
   })
 }
+
+const getMeal = async (id: string) => {
+  return (await axios.get(`/api/meals/${id}`)).data
+}
+
+export const useGetMeal = (id: string) => {
+  return useQuery(['meal', id], () => getMeal(id), {
+    enabled: !!id
+  })
+}

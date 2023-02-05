@@ -30,7 +30,7 @@ const SearchInput: React.FC<SearchInputProps> = ({
   return (
     <div className={styles.input}>
       <input type='text' value={title} onChange={setInput} />
-      <button onClick={changeWebsite}>{isExternalWebsite ? 'website' : 'users'}</button>
+      {/* <button onClick={changeWebsite}>{isExternalWebsite ? 'website' : 'users'}</button> */}
     </div>
   )
 }
