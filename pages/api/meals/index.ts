@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import {getAllIngredientsList, getMealsByTitle} from "../../src/server/externalApi/mealDBRequest";
+import {getAllIngredientsList, getMealsByTitle} from "../../../src/server/externalApi/mealDBRequest";
 
 export default async function handler(
   req: NextApiRequest,
