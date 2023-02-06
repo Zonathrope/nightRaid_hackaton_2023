@@ -1,125 +1,148 @@
-import dotenv  from "dotenv";
-dotenv.config();
+// eslint-disable-next-line import/no-extraneous-dependencies
+import bcrypt from 'bcrypt'
+import { User } from '../model/index'
+import DatabaseConnectionManager from '../database-connection-manager'
+import { UserModel } from '../dto/user.dto'
+import {
+  createIngredient,
+  deleteIngredient,
+  updateIngredient
+} from './ingredient-service'
 
-import {MyError, User} from "../model/index";
-import DatabaseConnectionManager from "../database-connection-manager";
-import {UserModel} from "../dto/user.dto";
-import {createIngredient, deleteIngredient, updateIngredient} from "../service/ingredient-service";
+DatabaseConnectionManager.getInstance()
 
-DatabaseConnectionManager.getInstance();
-
-export const createUser = async (login: string, password?: string): Promise<User | MyError> => {
-    return create(login, password);
-};
-
-export const getUser = async (login: string): Promise<User | MyError | null> => {
-    return get(login);
-};
-
-export const addIngredient = async (userId: string, ingredientIdInMealDB: string, nameOfIngredient: string, typeOfIngredient: string, amount: string): Promise<boolean | MyError> => {
-    return addIngredientToUser(userId, ingredientIdInMealDB, nameOfIngredient, typeOfIngredient, amount);
+async function hashPassword(password: string): Promise<string> {
+  const salt: string = await bcrypt.genSalt(10)
+  return bcrypt.hash(password, salt)
 }
 
-export const getIngredientList = async (userId: string): Promise<User | MyError> => {
-    return getIngredientsListFromDB(userId);
+async function create(login: string, passwordString: string): Promise<User> {
+  const password: string = await hashPassword(passwordString)
+
+  const user = new UserModel({
+    login,
+    password
+  })
+
+  return user.save({})
 }
 
-export const deleteIngredientFromUser = async (userId: string, ingredientId: string): Promise<boolean | MyError> => {
-    return deleteIngredientFromList(userId, ingredientId);
+async function get(login: string): Promise<User | null> {
+  return UserModel.findOne({ login })
 }
 
-export const updateUserIngredient = async (ingredientId: string, ingredientAmount: string): Promise<boolean | MyError> => {
-    return updateIngredient(ingredientId, ingredientAmount);
+async function isLoginCorrect(
+  login: string,
+  password: string
+): Promise<User | null> {
+  const user: User | null = await get(login)
+  if (user == null) return null
+  if (await bcrypt.compare(password, user.password as string)) {
+    return user
+  }
+  return null
 }
 
-async function create(login: string, password?: string): Promise<User | MyError> {
-    const user = new UserModel({
-        login: login,
-        password: password
-    });
-    
-    try {
-        return user.save();
-    } catch {
-        const error = {
-            errorMessage: "Can not add new user.",
-            statusCode: 500
-        };
+async function addIngredientToUser(
+  userId: string,
+  ingredientIdInMealDB: string,
+  nameOfIngredient: string,
+  typeOfIngredient: string,
+  amount: string
+): Promise<boolean> {
+  const newIngredient: any = await createIngredient(
+    ingredientIdInMealDB,
+    nameOfIngredient,
+    typeOfIngredient,
+    amount
+  )
 
-        return error;
-    }
+  if (newIngredient.statusCode === 500) {
+    return newIngredient
+  }
+
+  return (
+    (
+      await UserModel.updateOne(
+        { _id: userId },
+        { $addToSet: { ingredientsList: newIngredient } },
+        { new: true, useFindAndModify: false }
+      )
+    ).modifiedCount > 0
+  )
 }
 
-async function get(login: string): Promise<User | MyError | null> {
-    try {
-        return UserModel.findOne({login: login});
-    } catch {
-        const error = {
-            errorMessage: "Can not find user.",
-            statusCode: 404
-        };
-
-        return error;
-    }
+async function getIngredientsListFromDB(
+  userId: string
+): Promise<User | unknown> {
+  return UserModel.findOne({ user: userId }).populate('ingredientsList', '-__v')
 }
 
-async function addIngredientToUser(userId: string, ingredientIdInMealDB: string, nameOfIngredient: string, typeOfIngredient: string, amount: string): Promise<boolean | MyError> {
-    const newIngredient: any = await createIngredient(ingredientIdInMealDB, nameOfIngredient, typeOfIngredient, amount);
+async function deleteIngredientFromList(
+  userId: string,
+  ingredientId: string
+): Promise<boolean> {
+  await deleteIngredient(ingredientId)
 
-    if (newIngredient.statusCode === 500) {
-        return newIngredient;
-    }
-
-    try {
-        return ( await UserModel.updateOne(
-            {_id: userId},
-            { $addToSet: { ingredientsList: newIngredient } },
-            { new: true, useFindAndModify: false }
-        )).modifiedCount > 0;
-    } catch {
-        const error = {
-            errorMessage: "Can not add ingredient.",
-            statusCode: 500
-        };
-
-        return error;
-    }
-};
-
-
-
-async function getIngredientsListFromDB(userId: string): Promise<User | MyError> {
-    try {
-        return UserModel.findOne({user: userId}).populate("ingredientsList", "-__v");
-    } catch {
-        const error = {
-            errorMessage: "Can not get ingredients list.",
-            statusCode: 500
-        };
-
-        return error;
-    }
+  return (
+    (
+      await UserModel.updateOne(
+        { _id: userId },
+        { $pullAll: { ingredientsList: [{ _id: ingredientId }] } }
+      )
+    ).modifiedCount > 0
+  )
 }
 
-async function deleteIngredientFromList(userId: string, ingredientId: string): Promise<boolean | MyError> {
-    try {
-        await deleteIngredient(ingredientId);
-    } catch {
-        const error = {
-            errorMessage: "Can not delete ingredient from database.",
-            statusCode: 500
-        };
+export const createUser = async (
+  login: string,
+  password: string
+): Promise<User> => {
+  return create(login, password)
+}
 
-        return error;
-    }
-    try {
-        return (await UserModel.updateOne({ _id: userId }, {$pullAll : { ingredientsList: [{_id: ingredientId}]}})).modifiedCount > 0;
-    } catch {
-        const error = {
-            errorMessage: "Can not delete ingredient from user list.",
-            statusCode: 500
-        };
+export const getUser = async (login: string): Promise<User | null> => {
+  return get(login)
+}
 
-        return error;
-    }
+export const addIngredient = async (
+  userId: string,
+  ingredientIdInMealDB: string,
+  nameOfIngredient: string,
+  typeOfIngredient: string,
+  amount: string
+): Promise<boolean> => {
+  return addIngredientToUser(
+    userId,
+    ingredientIdInMealDB,
+    nameOfIngredient,
+    typeOfIngredient,
+    amount
+  )
+}
+
+export const getIngredientList = async (
+  userId: string
+): Promise<User | unknown> => {
+  return getIngredientsListFromDB(userId)
+}
+
+export const deleteIngredientFromUser = async (
+  userId: string,
+  ingredientId: string
+): Promise<boolean> => {
+  return deleteIngredientFromList(userId, ingredientId)
+}
+
+export const loginInAccount = async (
+  login: string,
+  password: string
+): Promise<User | null> => {
+  return isLoginCorrect(login, password)
+}
+export const updateUserIngredient = async (
+  ingredientId: string,
+  ingredientAmount: string
+): Promise<boolean> => {
+  return updateIngredient(ingredientId, ingredientAmount)
 }
