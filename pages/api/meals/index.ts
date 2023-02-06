@@ -17,10 +17,4 @@ export default async function handler(
     }
     res.status(error.statusCode).json(error)
   }
-    const title: string = req.query.title as string;
-    if (!!title) {
-        res.status(200).json((await getMealsByTitle(title)) as string);
-    } else {
-        res.status(200).json((await getAllIngredientsList()) as string);
-    }   
 }
