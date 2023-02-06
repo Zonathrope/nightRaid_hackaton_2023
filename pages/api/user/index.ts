@@ -19,7 +19,7 @@ export default async function handler(
     } catch (e) {
       const error: MyError = {
         error: e,
-        errorMessage: 'Can not add new ingredient in user.',
+        errorMessage: 'Can not create new user.',
         statusCode: 500
       }
       res.status(error.statusCode).json(error)

@@ -3,7 +3,7 @@ import { User } from '../model/index'
 
 const userSchema = new mongoose.Schema<User>({
   login: { type: String, required: true, unique: true },
-  password: { type: String, required: false },
+  password: { type: String, required: true },
   ingredientsList: [
     {
       type: mongoose.Schema.Types.ObjectId,

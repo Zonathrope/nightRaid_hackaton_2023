@@ -1,3 +1,5 @@
+// eslint-disable-next-line import/no-extraneous-dependencies
+import bcrypt from 'bcrypt'
 import { User } from '../model/index'
 import DatabaseConnectionManager from '../database-connection-manager'
 import { UserModel } from '../dto/user.dto'
@@ -9,7 +11,14 @@ import {
 
 DatabaseConnectionManager.getInstance()
 
-async function create(login: string, password?: string): Promise<User> {
+async function hashPassword(password: string): Promise<string> {
+  const salt: string = await bcrypt.genSalt(10)
+  return bcrypt.hash(password, salt)
+}
+
+async function create(login: string, passwordString: string): Promise<User> {
+  const password: string = await hashPassword(passwordString)
+
   const user = new UserModel({
     login,
     password
@@ -20,6 +29,18 @@ async function create(login: string, password?: string): Promise<User> {
 
 async function get(login: string): Promise<User | null> {
   return UserModel.findOne({ login })
+}
+
+async function isLoginCorrect(
+  login: string,
+  password: string
+): Promise<User | null> {
+  const user: User | null = await get(login)
+  if (user == null) return null
+  if (await bcrypt.compare(password, user.password as string)) {
+    return user
+  }
+  return null
 }
 
 async function addIngredientToUser(
@@ -75,7 +96,7 @@ async function deleteIngredientFromList(
 
 export const createUser = async (
   login: string,
-  password?: string
+  password: string
 ): Promise<User> => {
   return create(login, password)
 }
@@ -113,6 +134,12 @@ export const deleteIngredientFromUser = async (
   return deleteIngredientFromList(userId, ingredientId)
 }
 
+export const loginInAccount = async (
+  login: string,
+  password: string
+): Promise<User | null> => {
+  return isLoginCorrect(login, password)
+}
 export const updateUserIngredient = async (
   ingredientId: string,
   ingredientAmount: string
