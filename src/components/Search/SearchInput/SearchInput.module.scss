@@ -1,0 +1,34 @@
+.input {
+  margin-top: 10px;
+
+  input {
+    width: 30%;
+    min-width: 300px;
+    border: 1px solid #2a2a2a;
+    height: 2rem;
+    padding-left: 10px;
+    border-radius: 10px;
+    font-weight: 700;
+    font-family: Arial, sans-serif;
+    color: #2a2a2a;
+    &:focus {
+      outline: 1px solid #623a3a;
+    }
+  }
+  button {
+    margin-left: 20px;
+    height: 2rem;
+    border: 1px solid #2a2a2a;
+    padding: 5px 10px;
+    color: #2a2a2a;
+    font-weight: 700;
+    font-family: Arial, sans-serif;
+    border-radius: 10px;
+    background-color: antiquewhite;
+    cursor: pointer;
+    &:hover {
+      background-color: #2a2a2a;
+      color: antiquewhite;
+    }
+  }
+}

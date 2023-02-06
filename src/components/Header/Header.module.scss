@@ -1,0 +1,33 @@
+.header {
+  height: 45px;
+  background-color: antiquewhite;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 10px;
+  border-radius: 0 0 10px 10px;
+  .logo {
+    margin-right: 20px;
+  }
+}
+.logo {
+  width: 30px;
+  height: 30px;
+}
+
+.navbar {
+  .link {
+    margin: 5px;
+    color: #2a2a2a;
+    text-decoration: none;
+    font-size: 22px;
+    font-family: Arial, sans-serif;
+    cursor: pointer;
+    font-weight: 700;
+    transition: 0.1s ease-in-out;
+    &:hover {
+      color: #623a3a;
+      text-decoration: underline;
+    }
+  }
+}

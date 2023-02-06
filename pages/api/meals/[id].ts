@@ -18,4 +18,5 @@ export default async function handler(
     }
     res.status(error.statusCode).json(error)
   }
+  res.status(200).json(await getMealByid(id as string))
 }
