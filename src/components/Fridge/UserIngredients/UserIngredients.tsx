@@ -6,9 +6,10 @@ import styles from './UserIngredients.module.scss'
 
 interface UserIngredientsProps {
   userId: string
+  setSuggestion: React.Dispatch<React.SetStateAction<string | null>>
 }
 
-const UserIngredients: React.FC<UserIngredientsProps> = ({ userId }) => {
+const UserIngredients: React.FC<UserIngredientsProps> = ({ userId, setSuggestion }) => {
   const {
     data,
     isLoading
@@ -19,12 +20,13 @@ const UserIngredients: React.FC<UserIngredientsProps> = ({ userId }) => {
 
   return (
     <div className={styles.wrapper}>
-      {Object.keys(data)
+      {Object.keys(data?.grouped)
         .map((el) => <div className={styles.sortedWrapper} key={el}>
         <p>{el}</p>
-        {data[el]
+        {data.grouped?.[el]
           .map((el) =>
           <Ingredient
+            setSuggestion={setSuggestion}
             userId={userId}
             key={el.id}{...el} />)}
       </div>)}

@@ -33,7 +33,7 @@ const deleteIngredient = async (userId: string, ingredientId: string) => {
 const getUserIngredients = async (id: string) => {
   const response = (await axios.get(`/api/userIngredients?_id=${id}`)).data
 
-  const sortedObj = response.ingredientsList.reduce((acc, prev) => {
+  const grouped = response.ingredientsList.reduce((acc, prev) => {
     const { type } = prev
     if (acc[type] === undefined) {
       acc[type] = [prev]
@@ -42,7 +42,7 @@ const getUserIngredients = async (id: string) => {
     }
     return acc
   }, {})
-  return sortedObj
+  return { grouped, list: response.ingredientsList }
 }
 
 export const useCreateIngredient = () => {

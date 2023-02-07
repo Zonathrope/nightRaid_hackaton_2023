@@ -9,13 +9,15 @@ interface IngredientProps {
   name: string
   type: string
   amount: string
+  setSuggestion: React.Dispatch<React.SetStateAction<string | null>>
 }
 
 const Ingredient: React.FC<IngredientProps> = ({
   userId,
   _id,
   name,
-  amount: defaultAmount
+  amount: defaultAmount,
+  setSuggestion
 }) => {
   const { mutate } = useUpdateIngredient()
   const { mutate: deleteIngredient } = useDeleteIngredient()
@@ -52,6 +54,7 @@ const Ingredient: React.FC<IngredientProps> = ({
     setAmount(defaultAmount)
     setIsEditing(false)
   }
+
   return (
     <div className={styles.wrapper}>
       <input type='text' disabled value={name} />
@@ -63,7 +66,7 @@ const Ingredient: React.FC<IngredientProps> = ({
         <button onClick={() => setIsEditing(true)}>update</button>
         <button onClick={handleDeleteIngredient}>delete</button>
       </>}
-
+      <button className={styles.long} onClick={() => setSuggestion(name)}>suggestions</button>
     </div>
   )
 }
