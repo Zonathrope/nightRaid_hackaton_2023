@@ -9,7 +9,8 @@ interface FieldProps {
   errors?: string,
   isTouched?: boolean,
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
-  onBlur: (e: React.FocusEvent<HTMLInputElement>) => void
+  onBlur: (e: React.FocusEvent<HTMLInputElement>) => void,
+  type?: string
 }
 
 const Field: React.FC<FieldProps> = (props) => {
@@ -20,12 +21,13 @@ const Field: React.FC<FieldProps> = (props) => {
     isTouched,
     value,
     onBlur,
-    onChange
+    onChange,
+    type = 'text'
   } = props
   return (
     <div className={styles.input}>
       <label htmlFor={name}>{placeholder}</label>
-      <input type='text' name={name} placeholder={placeholder} value={value} onBlur={onBlur} onChange={onChange} />
+      <input type={type} name={name} placeholder={placeholder} value={value} onBlur={onBlur} onChange={onChange} />
       <div className={styles.error}>{errors && isTouched ? <>{errors}</> : null}</div>
     </div>
   )

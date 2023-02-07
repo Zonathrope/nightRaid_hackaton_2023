@@ -13,3 +13,49 @@
     color: antiquewhite;
   }
 }
+.register {
+  border: 2px solid black;
+  background-color: transparent;
+}
+
+.wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80vh;
+}
+
+.buttons {
+  display: flex;
+  justify-content: space-between;
+}
+
+.error {
+  font-weight: 700;
+  color: red;
+  font-family: Arial, sans-serif;
+}
+
+
+.customField {
+  border: 2px solid black;
+  padding: 5px 10px;
+  border-radius: 10px;
+  &:focus {
+    outline: none;
+  }
+  width: 12rem;
+  height: 1.8rem;
+}
+
+.label {
+  margin-left: 5px;
+  font-weight: 700;
+  font-family: Arial, sans-serif;
+}
+
+.selectWrapper {
+  display: flex;
+  flex-direction: column;
+  margin: 10px 0 20px 0;
+}
