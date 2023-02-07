@@ -15,8 +15,7 @@ const Ingredient: React.FC<IngredientProps> = ({
   userId,
   _id,
   name,
-  amount: defaultAmount,
-  type
+  amount: defaultAmount
 }) => {
   const { mutate } = useUpdateIngredient()
   const { mutate: deleteIngredient } = useDeleteIngredient()
@@ -56,7 +55,6 @@ const Ingredient: React.FC<IngredientProps> = ({
   return (
     <div className={styles.wrapper}>
       <input type='text' disabled value={name} />
-      <input type='text' disabled value={type} />
       <input type='text' onChange={(e) => handleChangeAmount(e.target.value)} disabled={!isEditing} value={amount} />
       {isEditing ? <>
         <button onClick={handleSaveAmount}>save</button>

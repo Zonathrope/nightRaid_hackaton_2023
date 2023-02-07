@@ -2,6 +2,8 @@ import React from 'react'
 import { useGetUserIngredients } from '@/queries/ingredients'
 import Ingredient from '@/components/Fridge/UserIngredients/Ingredient'
 
+import styles from './UserIngredients.module.scss'
+
 interface UserIngredientsProps {
   userId: string
 }
@@ -16,15 +18,16 @@ const UserIngredients: React.FC<UserIngredientsProps> = ({ userId }) => {
   }
 
   return (
-    <div>
-      {data.map((el) => <Ingredient
-        userId={userId}
-        _id={el._id}
-        amount={el.amount}
-        name={el.name}
-        type={el.type}
-        key={el._id}
-      />)}
+    <div className={styles.wrapper}>
+      {Object.keys(data)
+        .map((el) => <div className={styles.sortedWrapper} key={el}>
+        <p>{el}</p>
+        {data[el]
+          .map((el) =>
+          <Ingredient
+            userId={userId}
+            key={el.id}{...el} />)}
+      </div>)}
     </div>
   )
 }

@@ -32,19 +32,16 @@ const AddIngredient: React.FC<AddIngredientProps> = ({
           value: ingredient.type
         }
       })
-    } else {
-      originalFunc({
-        target: {
-          name: 'type',
-          value: ''
-        }
-      })
     }
   }
   return (
     <div>
       <Formik
-        initialValues={ingredientInitialValues}
+        initialValues={{
+          type: typeList[0],
+          name: ingredients[0].name,
+          amount: ''
+        }}
         onSubmit={(values, { setSubmitting }) => {
           const {
             type,
@@ -71,8 +68,7 @@ const AddIngredient: React.FC<AddIngredientProps> = ({
           touched,
           handleChange,
           handleBlur,
-          handleSubmit,
-          isSubmitting
+          handleSubmit
         }) => (
           <form onSubmit={handleSubmit}>
             {/* TODO: move to another component */}
@@ -92,7 +88,7 @@ const AddIngredient: React.FC<AddIngredientProps> = ({
             </div>
             <Field errors={errors.amount} isTouched={touched.amount} onBlur={handleBlur} onChange={handleChange}
                    name={'amount'} placeholder={'amount'} value={values.amount} />
-            <button className={styles.submit} type='submit' disabled={isSubmitting}>
+            <button className={styles.submit} type='submit'>
               Add
             </button>
           </form>
