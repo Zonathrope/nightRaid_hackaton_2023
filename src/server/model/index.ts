@@ -1,5 +1,6 @@
 export interface Ingredient {
   idInMealDB: string
+  id: string
   name: string
   type: string
   amount: string
@@ -13,6 +14,7 @@ export interface Meal {
 }
 
 export interface User {
+  _id: string
   login: string
   password?: string
   ingredientsList: Array<Ingredient>

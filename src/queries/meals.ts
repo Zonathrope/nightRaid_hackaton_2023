@@ -20,3 +20,12 @@ export const useGetMeal = (id: string) => {
     enabled: !!id
   })
 }
+
+const getMealsByIngredients = async (ingredient: string) => {
+  const query = ingredient.replace(/ /g, '_')
+  return (await axios.get(`/api/meals/getMealByIngridients?ingridients=${query}`)).data
+}
+
+export const useGetMealsByIngredients = (ingredient: string) => {
+  return useQuery(['get-meal-ingredient', ingredient], () => getMealsByIngredients(ingredient))
+}

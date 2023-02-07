@@ -7,6 +7,8 @@
     font-family: 'Arial', sans-serif;
     font-weight: 700;
     text-transform: capitalize;
+    margin-bottom: 2px;
+    margin-left: 5px;
   }
   input {
     border: 2px solid #2a2a2a;
@@ -21,6 +23,12 @@
   }
   .error {
     position: absolute;
+    color: red;
+    font-family: Arial, sans-serif;
+    font-size: 12px;
+    text-transform: lowercase;
+    font-weight: 700;
     top: 100%;
+    left: 5px;
   }
 }

@@ -1,0 +1,33 @@
+.wrapper {
+  input {
+    border: 2px solid black;
+    padding: 5px 10px;
+    color: #2a2a2a;
+    margin: 0 5px;
+    border-radius: 10px;
+    &:disabled {
+      background-color: lightgray;
+    }
+  }
+  button {
+    width: 70px;
+    border: 2px solid black;
+    padding: 5px 10px;
+    border-radius: 10px;
+    margin: 0 5px;
+    background-color: white;
+    transition: 0.2s ease-in-out;
+    &:nth-child(1) {
+      background-color: red;
+    }
+    &:hover {
+      color: white;
+      background-color: #2a2a2a;
+    }
+  }
+}
+.long {
+  //WORST APPROACH EVER
+  //TODO: FIX
+  width: 100px !important;
+}

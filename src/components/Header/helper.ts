@@ -1,6 +1,11 @@
+import LocalStorage from '@/lib/localStorage'
+
 export interface Link {
   href: string,
   title: string,
+  secured?: boolean,
+  isLogin?: boolean,
+  handler?: () => void
 }
 
 export const links: Link[] = [
@@ -14,6 +19,18 @@ export const links: Link[] = [
   },
   {
     href: '/fridge',
-    title: 'Fridge'
+    title: 'Fridge',
+    secured: true
+  },
+  {
+    href: '/authorization',
+    title: 'Sign in',
+    isLogin: true
+  },
+  {
+    href: '/',
+    title: 'Log out',
+    secured: true,
+    handler: LocalStorage.removeUser
   }
 ]
