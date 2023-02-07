@@ -83,7 +83,7 @@ async function deleteIngredientFromList(
   ingredientId: string
 ): Promise<boolean> {
   await deleteIngredient(ingredientId)
-
+  
   return (
     (
       await UserModel.updateOne(
@@ -131,6 +131,8 @@ export const deleteIngredientFromUser = async (
   userId: string,
   ingredientId: string
 ): Promise<boolean> => {
+  console.log(userId);
+  
   return deleteIngredientFromList(userId, ingredientId)
 }
 
