@@ -6,6 +6,18 @@ This app was written as a test challenge for **Hackaton 2023**.
 
 [Link](https://night-raid-hackaton2023.herokuapp.com)
 
+# Run project
+
+To run the project you need to run 2 commands in the cmd
+> npm i
+> npm run dev
+
+be sure you have .env file in your root directory with the following fields: 
+CONNECTION="mongodb+srv://<login:<password>@cluster0.9jutuij.mongodb.net/database?retryWrites=true&w=majority"
+URI = 'https://www.themealdb.com/api/json/v2/key/'
+
+You have to change login, password and key
+
 # Product functionality
 
 The application has standard functions that were specified in the task:
@@ -37,5 +49,3 @@ The user can also **Search** for dishes and **View** receipt.
 ![Search](https://raw.githubusercontent.com/Zonathrope/nightRaid_hackaton_2023/main/Images/search.jpg)
 
 ![View](https://raw.githubusercontent.com/Zonathrope/nightRaid_hackaton_2023/main/Images/view.jpg)
-
-
