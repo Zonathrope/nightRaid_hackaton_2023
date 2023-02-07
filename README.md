@@ -9,8 +9,8 @@ This app was written as a test challenge for **Hackaton 2023**.
 # Run project
 
 To run the project you need to run 2 commands in the cmd
-> npm i
-> npm run dev
+- > npm i
+- > npm run dev
 
 Be sure you have .env file in your root directory with the following fields: 
 - CONNECTION="mongodb+srv://<login:<password>@cluster0.9jutuij.mongodb.net/database?retryWrites=true&w=majority"
